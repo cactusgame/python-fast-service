@@ -49,8 +49,6 @@ def _handle_sequence(seq, skip_underscore=False):
 @json_serializable.register(str)
 @json_serializable.register(bool)  # redudant, supported as int subclass
 @json_serializable.register(type(None))
-@json_serializable.register(numpy.bool_)
-@json_serializable.register(numpy.int_)
 @json_serializable.register(numpy.intc)
 @json_serializable.register(numpy.intp)
 @json_serializable.register(numpy.int8)
@@ -61,12 +59,10 @@ def _handle_sequence(seq, skip_underscore=False):
 @json_serializable.register(numpy.uint16)
 @json_serializable.register(numpy.uint32)
 @json_serializable.register(numpy.uint64)
-@json_serializable.register(numpy.float_)
 @json_serializable.register(numpy.float16)
 @json_serializable.register(numpy.float32)
 @json_serializable.register(numpy.float64)
 @json_serializable.register(complex)
-@json_serializable.register(numpy.complex_)
 @json_serializable.register(numpy.complex64)
 @json_serializable.register(numpy.complex128)
 def _handle_default_scalar_types(value, skip_underscore=False):

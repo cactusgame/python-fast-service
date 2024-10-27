@@ -1,0 +1,390 @@
+[2024-10-27 08:21:11 +0000] [9] [DEBUG] Current configuration:
+  config: None
+  bind: ['0.0.0.0:8000']
+  backlog: 640
+  workers: 1
+  worker_class: sync
+  threads: 1
+  worker_connections: 1000
+  max_requests: 0
+  max_requests_jitter: 200
+  timeout: 60
+  graceful_timeout: 30
+  keepalive: 2
+  limit_request_line: 4094
+  limit_request_fields: 100
+  limit_request_field_size: 8190
+  reload: False
+  reload_engine: auto
+  reload_extra_files: []
+  spew: False
+  check_config: False
+  preload_app: False
+  sendfile: None
+  reuse_port: False
+  chdir: /root/app
+  daemon: False
+  raw_env: []
+  pidfile: None
+  worker_tmp_dir: None
+  user: 0
+  group: 0
+  umask: 0
+  initgroups: False
+  tmp_upload_dir: None
+  secure_scheme_headers: {'X-FORWARDED-PROTOCOL': 'ssl', 'X-FORWARDED-PROTO': 'https', 'X-FORWARDED-SSL': 'on'}
+  forwarded_allow_ips: ['127.0.0.1']
+  accesslog: logs/fixaccess.log
+  disable_redirect_access_to_syslog: False
+  access_log_format: %(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"
+  errorlog: logs/fixerror.log
+  loglevel: DEBUG
+  capture_output: True
+  logger_class: gunicorn.glogging.Logger
+  logconfig: None
+  logconfig_dict: {}
+  syslog_addr: udp://localhost:514
+  syslog: False
+  syslog_prefix: None
+  syslog_facility: user
+  enable_stdio_inheritance: False
+  statsd_host: None
+  dogstatsd_tags: 
+  statsd_prefix: 
+  proc_name: simple
+  default_proc_name: ab:prometheus_app
+  pythonpath: None
+  paste: None
+  on_starting: <function on_starting at 0x778847a4e940>
+  on_reload: <function OnReload.on_reload at 0x778847c4f280>
+  when_ready: <function when_ready at 0x778847a4e8b0>
+  pre_fork: <function Prefork.pre_fork at 0x778847c4f4c0>
+  post_fork: <function post_fork at 0x77887dfe55e0>
+  post_worker_init: <function post_worker_init at 0x778847a4e790>
+  worker_int: <function WorkerInt.worker_int at 0x778847c4f820>
+  worker_abort: <function WorkerAbort.worker_abort at 0x778847c4f940>
+  pre_exec: <function PreExec.pre_exec at 0x778847c4fa60>
+  pre_request: <function PreRequest.pre_request at 0x778847c4fb80>
+  post_request: <function PostRequest.post_request at 0x778847c4fc10>
+  child_exit: <function child_exit at 0x778847a4e820>
+  worker_exit: <function WorkerExit.worker_exit at 0x778847c4fe50>
+  nworkers_changed: <function NumWorkersChanged.nworkers_changed at 0x778847c4ff70>
+  on_exit: <function OnExit.on_exit at 0x778847c5d0d0>
+  proxy_protocol: False
+  proxy_allow_ips: ['127.0.0.1']
+  keyfile: None
+  certfile: None
+  ssl_version: 2
+  cert_reqs: 0
+  ca_certs: None
+  suppress_ragged_eofs: True
+  do_handshake_on_connect: False
+  ciphers: None
+  raw_paste_global_conf: []
+  strip_header_spaces: False
+[2024-10-27 08:21:11 +0000] [9] [INFO] Starting gunicorn 20.0.4
+[2024-10-27 08:21:11 +0000] [9] [DEBUG] Arbiter booted
+[2024-10-27 08:21:11 +0000] [9] [INFO] Listening at: http://0.0.0.0:8000 (9)
+[2024-10-27 08:21:11 +0000] [9] [INFO] Using worker: sync
+[2024-10-27 08:21:11 +0000] [30] [INFO] Booting worker with pid: 30
+[2024-10-27 08:21:11] [30] [INFO] global log level set to DEBUG
+[2024-10-27 08:21:11 +0000] [9] [DEBUG] 1 workers
+[2024-10-27 08:21:11] [30] [DEBUG] algorithms: {('add', 'python'): add(a: int, b: int) -> int,
+ ('compress', 'python'): compress() -> int,
+ ('custom_response', 'python'): custom_response(a: int, b: int) -> int}
+[2024-10-27 08:21:11] [30] [DEBUG] fixtures: {}
+[2024-10-27 08:27:00 +0000] [9] [INFO] Handling signal: int
+[2024-10-27 08:27:00 +0000] [30] [INFO] Worker exiting (pid: 30)
+[2024-10-27 08:27:00 +0000] [9] [INFO] Shutting down: Master
+[2024-10-27 08:27:01 +0000] [11] [DEBUG] Current configuration:
+  config: None
+  bind: ['0.0.0.0:8000']
+  backlog: 640
+  workers: 1
+  worker_class: sync
+  threads: 1
+  worker_connections: 1000
+  max_requests: 0
+  max_requests_jitter: 200
+  timeout: 60
+  graceful_timeout: 30
+  keepalive: 2
+  limit_request_line: 4094
+  limit_request_fields: 100
+  limit_request_field_size: 8190
+  reload: False
+  reload_engine: auto
+  reload_extra_files: []
+  spew: False
+  check_config: False
+  preload_app: False
+  sendfile: None
+  reuse_port: False
+  chdir: /root/app
+  daemon: False
+  raw_env: []
+  pidfile: None
+  worker_tmp_dir: None
+  user: 0
+  group: 0
+  umask: 0
+  initgroups: False
+  tmp_upload_dir: None
+  secure_scheme_headers: {'X-FORWARDED-PROTOCOL': 'ssl', 'X-FORWARDED-PROTO': 'https', 'X-FORWARDED-SSL': 'on'}
+  forwarded_allow_ips: ['127.0.0.1']
+  accesslog: logs/fixaccess.log
+  disable_redirect_access_to_syslog: False
+  access_log_format: %(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"
+  errorlog: logs/fixerror.log
+  loglevel: DEBUG
+  capture_output: True
+  logger_class: gunicorn.glogging.Logger
+  logconfig: None
+  logconfig_dict: {}
+  syslog_addr: udp://localhost:514
+  syslog: False
+  syslog_prefix: None
+  syslog_facility: user
+  enable_stdio_inheritance: False
+  statsd_host: None
+  dogstatsd_tags: 
+  statsd_prefix: 
+  proc_name: simple
+  default_proc_name: ab:prometheus_app
+  pythonpath: None
+  paste: None
+  on_starting: <function on_starting at 0x759cfd9e4af0>
+  on_reload: <function OnReload.on_reload at 0x759cfdc13430>
+  when_ready: <function when_ready at 0x759cfd9e4a60>
+  pre_fork: <function Prefork.pre_fork at 0x759cfdc13670>
+  post_fork: <function post_fork at 0x759d33f575e0>
+  post_worker_init: <function post_worker_init at 0x759cfd9e4940>
+  worker_int: <function WorkerInt.worker_int at 0x759cfdc139d0>
+  worker_abort: <function WorkerAbort.worker_abort at 0x759cfdc13af0>
+  pre_exec: <function PreExec.pre_exec at 0x759cfdc13c10>
+  pre_request: <function PreRequest.pre_request at 0x759cfdc13d30>
+  post_request: <function PostRequest.post_request at 0x759cfdc13dc0>
+  child_exit: <function child_exit at 0x759cfd9e49d0>
+  worker_exit: <function WorkerExit.worker_exit at 0x759cfdc29040>
+  nworkers_changed: <function NumWorkersChanged.nworkers_changed at 0x759cfdc29160>
+  on_exit: <function OnExit.on_exit at 0x759cfdc29280>
+  proxy_protocol: False
+  proxy_allow_ips: ['127.0.0.1']
+  keyfile: None
+  certfile: None
+  ssl_version: 2
+  cert_reqs: 0
+  ca_certs: None
+  suppress_ragged_eofs: True
+  do_handshake_on_connect: False
+  ciphers: None
+  raw_paste_global_conf: []
+  strip_header_spaces: False
+[2024-10-27 08:27:01 +0000] [11] [INFO] Starting gunicorn 20.0.4
+[2024-10-27 08:27:01 +0000] [11] [DEBUG] Arbiter booted
+[2024-10-27 08:27:01 +0000] [11] [INFO] Listening at: http://0.0.0.0:8000 (11)
+[2024-10-27 08:27:01 +0000] [11] [INFO] Using worker: sync
+[2024-10-27 08:27:01 +0000] [51] [INFO] Booting worker with pid: 51
+[2024-10-27 08:27:01] [51] [INFO] global log level set to DEBUG
+[2024-10-27 08:27:01] [51] [DEBUG] algorithms: {('add', 'python'): add(a: int, b: int) -> int,
+ ('compress', 'python'): compress() -> int,
+ ('custom_response', 'python'): custom_response(a: int, b: int) -> int}
+[2024-10-27 08:27:01] [51] [DEBUG] fixtures: {}
+[2024-10-27 08:27:01 +0000] [11] [DEBUG] 1 workers
+[2024-10-27 08:28:32 +0000] [13] [DEBUG] Current configuration:
+  config: None
+  bind: ['0.0.0.0:8000']
+  backlog: 640
+  workers: 1
+  worker_class: sync
+  threads: 1
+  worker_connections: 1000
+  max_requests: 0
+  max_requests_jitter: 200
+  timeout: 60
+  graceful_timeout: 30
+  keepalive: 2
+  limit_request_line: 4094
+  limit_request_fields: 100
+  limit_request_field_size: 8190
+  reload: False
+  reload_engine: auto
+  reload_extra_files: []
+  spew: False
+  check_config: False
+  preload_app: False
+  sendfile: None
+  reuse_port: False
+  chdir: /root/app
+  daemon: False
+  raw_env: []
+  pidfile: None
+  worker_tmp_dir: None
+  user: 0
+  group: 0
+  umask: 0
+  initgroups: False
+  tmp_upload_dir: None
+  secure_scheme_headers: {'X-FORWARDED-PROTOCOL': 'ssl', 'X-FORWARDED-PROTO': 'https', 'X-FORWARDED-SSL': 'on'}
+  forwarded_allow_ips: ['127.0.0.1']
+  accesslog: logs/fixaccess.log
+  disable_redirect_access_to_syslog: False
+  access_log_format: %(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"
+  errorlog: logs/fixerror.log
+  loglevel: DEBUG
+  capture_output: True
+  logger_class: gunicorn.glogging.Logger
+  logconfig: None
+  logconfig_dict: {}
+  syslog_addr: udp://localhost:514
+  syslog: False
+  syslog_prefix: None
+  syslog_facility: user
+  enable_stdio_inheritance: False
+  statsd_host: None
+  dogstatsd_tags: 
+  statsd_prefix: 
+  proc_name: simple
+  default_proc_name: ab:prometheus_app
+  pythonpath: None
+  paste: None
+  on_starting: <function on_starting at 0x7470ab88e940>
+  on_reload: <function OnReload.on_reload at 0x7470aba8f280>
+  when_ready: <function when_ready at 0x7470ab88e8b0>
+  pre_fork: <function Prefork.pre_fork at 0x7470aba8f4c0>
+  post_fork: <function post_fork at 0x7470e1e5a5e0>
+  post_worker_init: <function post_worker_init at 0x7470ab88e790>
+  worker_int: <function WorkerInt.worker_int at 0x7470aba8f820>
+  worker_abort: <function WorkerAbort.worker_abort at 0x7470aba8f940>
+  pre_exec: <function PreExec.pre_exec at 0x7470aba8fa60>
+  pre_request: <function PreRequest.pre_request at 0x7470aba8fb80>
+  post_request: <function PostRequest.post_request at 0x7470aba8fc10>
+  child_exit: <function child_exit at 0x7470ab88e820>
+  worker_exit: <function WorkerExit.worker_exit at 0x7470aba8fe50>
+  nworkers_changed: <function NumWorkersChanged.nworkers_changed at 0x7470aba8ff70>
+  on_exit: <function OnExit.on_exit at 0x7470aba9e0d0>
+  proxy_protocol: False
+  proxy_allow_ips: ['127.0.0.1']
+  keyfile: None
+  certfile: None
+  ssl_version: 2
+  cert_reqs: 0
+  ca_certs: None
+  suppress_ragged_eofs: True
+  do_handshake_on_connect: False
+  ciphers: None
+  raw_paste_global_conf: []
+  strip_header_spaces: False
+[2024-10-27 08:28:32 +0000] [13] [INFO] Starting gunicorn 20.0.4
+[2024-10-27 08:28:32 +0000] [13] [DEBUG] Arbiter booted
+[2024-10-27 08:28:32 +0000] [13] [INFO] Listening at: http://0.0.0.0:8000 (13)
+[2024-10-27 08:28:32 +0000] [13] [INFO] Using worker: sync
+[2024-10-27 08:28:32 +0000] [52] [INFO] Booting worker with pid: 52
+[2024-10-27 08:28:32] [52] [INFO] global log level set to DEBUG
+[2024-10-27 08:28:32 +0000] [13] [DEBUG] 1 workers
+[2024-10-27 08:28:32] [52] [DEBUG] algorithms: {('add', 'python'): add(a: int, b: int) -> int,
+ ('compress', 'python'): compress() -> int,
+ ('custom_response', 'python'): custom_response(a: int, b: int) -> int}
+[2024-10-27 08:28:32] [52] [DEBUG] fixtures: {}
+[2024-10-27 08:28:39 +0000] [52] [DEBUG] POST /api/add
+[2024-10-27 08:28:39] [52] [DEBUG] run api add(a=1, b=2), sampler=None
+[2024-10-27 08:28:39] [52] [INFO] enter algorithm 1, 2 
+[2024-10-27 08:28:39] [52] [DEBUG] add.main run time: 0.0011396408081054688
+[2024-10-27 08:28:43 +0000] [13] [INFO] Handling signal: int
+[2024-10-27 08:28:43 +0000] [52] [INFO] Worker exiting (pid: 52)
+[2024-10-27 08:28:43 +0000] [13] [INFO] Shutting down: Master
+[2024-10-27 08:28:44 +0000] [12] [DEBUG] Current configuration:
+  config: None
+  bind: ['0.0.0.0:8000']
+  backlog: 640
+  workers: 1
+  worker_class: sync
+  threads: 1
+  worker_connections: 1000
+  max_requests: 0
+  max_requests_jitter: 200
+  timeout: 60
+  graceful_timeout: 30
+  keepalive: 2
+  limit_request_line: 4094
+  limit_request_fields: 100
+  limit_request_field_size: 8190
+  reload: False
+  reload_engine: auto
+  reload_extra_files: []
+  spew: False
+  check_config: False
+  preload_app: False
+  sendfile: None
+  reuse_port: False
+  chdir: /root/app
+  daemon: False
+  raw_env: []
+  pidfile: None
+  worker_tmp_dir: None
+  user: 0
+  group: 0
+  umask: 0
+  initgroups: False
+  tmp_upload_dir: None
+  secure_scheme_headers: {'X-FORWARDED-PROTOCOL': 'ssl', 'X-FORWARDED-PROTO': 'https', 'X-FORWARDED-SSL': 'on'}
+  forwarded_allow_ips: ['127.0.0.1']
+  accesslog: logs/fixaccess.log
+  disable_redirect_access_to_syslog: False
+  access_log_format: %(h)s %(l)s %(u)s %(t)s "%(r)s" %(s)s %(b)s "%(f)s" "%(a)s"
+  errorlog: logs/fixerror.log
+  loglevel: DEBUG
+  capture_output: True
+  logger_class: gunicorn.glogging.Logger
+  logconfig: None
+  logconfig_dict: {}
+  syslog_addr: udp://localhost:514
+  syslog: False
+  syslog_prefix: None
+  syslog_facility: user
+  enable_stdio_inheritance: False
+  statsd_host: None
+  dogstatsd_tags: 
+  statsd_prefix: 
+  proc_name: simple
+  default_proc_name: ab:prometheus_app
+  pythonpath: None
+  paste: None
+  on_starting: <function on_starting at 0x76a3b8996af0>
+  on_reload: <function OnReload.on_reload at 0x76a3b8bc4430>
+  when_ready: <function when_ready at 0x76a3b8996a60>
+  pre_fork: <function Prefork.pre_fork at 0x76a3b8bc4670>
+  post_fork: <function post_fork at 0x76a3eef2a5e0>
+  post_worker_init: <function post_worker_init at 0x76a3b8996940>
+  worker_int: <function WorkerInt.worker_int at 0x76a3b8bc49d0>
+  worker_abort: <function WorkerAbort.worker_abort at 0x76a3b8bc4af0>
+  pre_exec: <function PreExec.pre_exec at 0x76a3b8bc4c10>
+  pre_request: <function PreRequest.pre_request at 0x76a3b8bc4d30>
+  post_request: <function PostRequest.post_request at 0x76a3b8bc4dc0>
+  child_exit: <function child_exit at 0x76a3b89969d0>
+  worker_exit: <function WorkerExit.worker_exit at 0x76a3b8bd9040>
+  nworkers_changed: <function NumWorkersChanged.nworkers_changed at 0x76a3b8bd9160>
+  on_exit: <function OnExit.on_exit at 0x76a3b8bd9280>
+  proxy_protocol: False
+  proxy_allow_ips: ['127.0.0.1']
+  keyfile: None
+  certfile: None
+  ssl_version: 2
+  cert_reqs: 0
+  ca_certs: None
+  suppress_ragged_eofs: True
+  do_handshake_on_connect: False
+  ciphers: None
+  raw_paste_global_conf: []
+  strip_header_spaces: False
+[2024-10-27 08:28:44 +0000] [12] [INFO] Starting gunicorn 20.0.4
+[2024-10-27 08:28:44 +0000] [12] [DEBUG] Arbiter booted
+[2024-10-27 08:28:44 +0000] [12] [INFO] Listening at: http://0.0.0.0:8000 (12)
+[2024-10-27 08:28:44 +0000] [12] [INFO] Using worker: sync
+[2024-10-27 08:28:44 +0000] [52] [INFO] Booting worker with pid: 52
+[2024-10-27 08:28:44] [52] [INFO] global log level set to DEBUG
+[2024-10-27 08:28:44] [52] [DEBUG] algorithms: {('add', 'python'): add(a: int, b: int) -> int,
+ ('compress', 'python'): compress() -> int,
+ ('custom_response', 'python'): custom_response(a: int, b: int) -> int}
+[2024-10-27 08:28:44] [52] [DEBUG] fixtures: {}
+[2024-10-27 08:28:44 +0000] [12] [DEBUG] 1 workers

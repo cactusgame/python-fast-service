@@ -4,13 +4,13 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "python-fast-service"
-version = "0.1.0"
+version = "0.1.1"
 description = "This project can quickly package your Python code into a service that is ready for production environments."
-readme = "README.md"
+readme = "README_en.md"
 authors = [{ name = "cactusgame", email = "704300624@qq.com" }]
 license = { file = "LICENSE" }
 classifiers = [
-    "License :: OSI Approved :: Apache License",
+    "License :: OSI Approved :: MIT License",
     "Programming Language :: Python",
     "Programming Language :: Python :: 3",
 ]
@@ -23,7 +23,7 @@ dependencies = [
     "markupsafe==2.0.1",
     "gunicorn==20.0.4",
     "prometheus_client==0.8.0",
-    "requests==2.24.0",
+    "requests>=2.24.0",
     "Jinja2==2.11.2",
     "click==7.1.2",
     "Cython>=0.29.21",
