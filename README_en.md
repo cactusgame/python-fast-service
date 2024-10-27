@@ -1,4 +1,4 @@
-[Chinese](docs/README.md)   [[English]](docs/en/README_en.md)
+[Chinese](README.md)   [[English]](README_en.md)
 
 # Introduction
 
