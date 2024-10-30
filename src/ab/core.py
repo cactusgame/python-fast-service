@@ -8,6 +8,7 @@ from ab.utils.python_util import arguments
 
 api_hub = {}
 
+
 class ApiClass:
     """
     stateless class for algorithm abstraction
@@ -18,8 +19,7 @@ class ApiClass:
         try:
             return api_hub[(name, engine)]
         except KeyError as e:
-            raise AlgorithmException(-1, 'algorithm [{name}] on engine [{engine}] not found'.format(
-                name=name, engine=engine)) from e
+            raise AlgorithmException(5000, name) from e
 
     @staticmethod
     def process_signature(func):
@@ -50,7 +50,7 @@ class ApiClass:
             elif param in self.defaults_map:
                 main_args.append(self.defaults_map[param])
             else:
-                raise KeyError('缺少参数 {param}'.format(param=param))
+                raise AlgorithmException(5001, '{param}'.format(param=param))
 
         tic = time.time()
         ret = self.main(*main_args)
@@ -58,9 +58,6 @@ class ApiClass:
         from ab.utils import logger
         logger.debug('{self.name}.main run time:'.format(self=self), toc - tic)
         return ret
-
-
-
 
 
 def api(name=None, engine='python', **kwargs):
@@ -76,6 +73,7 @@ def api(name=None, engine='python', **kwargs):
         register_api(name, engine, func, **kwargs)
 
         return func
+
     return register_func
 
 

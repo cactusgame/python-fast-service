@@ -1,61 +1,61 @@
-[中文](README.md)   [[English]](README_en.md)
+[Chinese](README_zh)   [[English]](README)
 
-# 简介
+# Introduction
 
-这个项目可以快速将你的python代码，包装成生产环境可用的服务，主要包含以下功能
+This project can quickly package your Python code into a production-ready service, providing the following main features:
 
-- 以统一的方式实现API接口，统一请求和响应的格式
-- 提供监控，日志，多环境配置等实用功能
-- 实现私有交付中的加密，许可证等需求
-- 协助构建docker镜像
+- Implements API interfaces in a unified manner with standardized request and response formats
+- Provides useful features like monitoring, logging, and multi-environment configuration
+- Supports requirements like encryption and licensing for private delivery
+- Assists in building Docker images
 
-本项目最初是同事和我在阿里云工作时开发的[algorithm-base框架](https://github.com/aliyun/algorithm-base)
-。由于当时需要满足商业项目需求，框架内耦合了冗余逻辑。我从阿里云离职后，fork了该项目，保留了最常用的功能，并进行了一定优化。
+This project was originally developed as the [algorithm-base framework](https://github.com/aliyun/algorithm-base) by my colleagues and me while working at Alibaba Cloud. Due to the need to meet commercial project requirements, the framework included redundant logic. After leaving Alibaba Cloud, I forked the project, retained the most commonly used features, and made certain optimizations.
 
-# 快速开始
+# Quick Start
 
-我们用一个极简的例子，为你的`API`构建镜像并发布服务。
+Here is a minimal example to build an image for your `API` and deploy the service.
 
-## 安装框架
-- 当前框架只支持X86架构的MacOS和Linux
-- 目前仅在python3.8版本测试过
-- 详见 [安装](docs/cn/install.md)
+## Install the Framework
+
+- The current framework only supports MacOS and Linux on X86 architecture
+- It has only been tested with Python 3.8
+- See [Installation](docs/en/install.md) for details
 
 ```
 pip install python-fast-service
 ```
 
-## 编写hello world服务
 
-进入`examples/simple`目录。这即是日后创建项目用的模板，也是hello-world程序。
+## Write a Hello World Service
 
-对于`simple`项目, 你需要在`api`目录下实现你的API(相当于服务的`控制器`层)。
-例子中提供了一个`demo.py`，其中实现了若干`API`。如下代码，这段被`@api`装饰器修饰的方法，将会被自动暴露为路径是`/api/add`
-的RESTFUL API。详见 [服务与API](docs/cn/service.md)
+Navigate to the `examples/simple` directory. This serves as the template for creating future projects, as well as the Hello World program.
 
-```
+For the `simple` project, you need to implement your API (the `controller` layer of the service) in the `api` directory. The example provides a `demo.py` file with several `API` implementations. In the following code, the method decorated with `@api` will be automatically exposed as a RESTful API with the path `/api/add`. See [Service and API](docs/en/service.md) for more details.
+
+```python
 from ab.core import api
 
 @api()
 def add(a: int, b: int) -> int:
     """
-    一个简单的加法算法示例
-    :param a: 第一个参数
-    :param b: 第二个参数
+    A simple addition algorithm example
+    :param a: First parameter
+    :param b: Second parameter
     :return:
     """
     return a + b
 ```
 
-## 启动服务并测试
+## Start the Service and Test
 
-在`simple`根目录下，确保8000端口没有被占用，键入如下命令启动服务
+In the `simple` root directory, ensure port 8000 is free, and start the service by entering the following command:
 
-```
+```commandline
 pfs
 ```
 
-服务成功启动后,看到类似如下输出，代表启动成功
+
+After the service starts successfully, you will see output similar to the following, indicating that the service has started:
 
 ```
 [2023-02-01 13:07:33 +0800] [12257] [INFO] Starting gunicorn 20.0.4
@@ -70,7 +70,7 @@ pfs
 [2023-02-01 13:07:33] [12268] [DEBUG] fixtures: {}
 ```
 
-你可以通过如下命令访问前面定义的接口
+You can access the previously defined API with the following command:
 
 ```
 curl --location --request POST 'localhost:8000/api/add' \
@@ -80,62 +80,59 @@ curl --location --request POST 'localhost:8000/api/add' \
 }'
 ```
 
-如下输出，返回了加法算法的结果
+
+The output below shows the result of the addition algorithm:
 
 ```
 {"code":0,"data":3}
 ```
 
-### 修改API路径
 
-Fast Service框架默认将API统一暴露在`/api`路径下，你当然也可以增加新的路径。你需要在项目根目录的`api`文件夹下，创建一个python
-module，如`endpoint.py`,
-这样，就可以同构`/api/document/add`来访问该API了
+### Modifying the API Path
 
-```
+The Fast Service framework defaults to exposing APIs under the `/api` path, but you can add new paths as well. You need to create a Python module, such as `endpoint.py`, in the `api` folder in the project’s root directory, allowing you to access this API at `/api/document/add`.
+
+```python
 from ab.endpoint.registry import register_endpoint
 
 register_endpoint('/api/document/<string:api_name>')
 ```
 
-### 修改响应体结构
-你可以返回flask的Response对象，用来替换Fast Service的默认响应体结构。详见 [定制响应结构](docs/cn/custom-response-format.md)
+### Customizing the Response Structure
+You can return a Flask Response object to replace the default Fast Service response structure. See Custom Response Structure for details
+
 ```
  from flask import Response
  return Response(f"Hello, {a - b}", status=200, mimetype='text/plain')
 ```
 
 
-## 构建镜像，发布与访问
+## Build Docker Image
 
-在`simple`项目根目录下键入如下命令
-
+In the simple project root directory, enter the following command:
 ```
 sh build.sh
 ```
 
-至此，你已经对Fast Service框架有了初步印象, 详细文档见`用户指南`。
+At this point, you should have a basic understanding of the Fast Service framework. For detailed documentation, see the User Guide.
 
-# 用户指南
-
-- [安装](docs/cn/install.md)
-- 服务能力
-    - [服务与API](docs/cn/service.md)
-- 性能相关
-    - [http压缩](docs/cn/compress.md)
-- 运维能力
-    - [多环境配置](docs/cn/config.md)
-    - [健康检查](docs/cn/health_check.md)
-    - [监控](docs/cn/monitoring.md)
-    - [滚动日志](docs/cn/log.md)
-    - [异常与错误处理](docs/cn/error.md)
-    - [测试用例](docs/cn/test.md)
-- 最佳实践
-    - [如何创建新项目](docs/cn/new-project.md)
-    - [定制响应结构](docs/cn/custom-response-format.md)
-    - [常见问题](docs/cn/best-practice.md)
-    - [gunicorn worker timeout问题排查](https://zhuanlan.zhihu.com/p/370330463)
-    - [配置gunicorn的常见问题](https://zhuanlan.zhihu.com/p/371115835)
+- [Installation](docs/en/install.md)
+- Service
+  - [service and API](docs/en/service.md)
+- Performance
+  - [http compression](docs/en/compress.md)
+- OPS
+  - [multiple environment configuration](docs/en/config.md)
+  - [health check](docs/en/health_check.md)
+  - [monitoring](docs/en/monitoring.md)
+  - [exception and error handling](docs/en/error.md)
+  - [test case](docs/en/test.md)
+- Best Practices
+  - [how to create a new project](docs/en/new-project.md)
+  - [how to custom the response structure](docs/en/custom-response-format.md)
+  - [FAQ](docs/en/best-practice.md)
+  - [why gunicorn worker timeout](https://zhuanlan.zhihu.com/p/370330463)
+  - [gunicorn configuration](https://zhuanlan.zhihu.com/p/371115835)
 
 
 

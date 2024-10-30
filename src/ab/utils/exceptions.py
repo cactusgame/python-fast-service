@@ -1,6 +1,7 @@
 #! python3
 import sys
 import traceback
+from ab.const import ErrorCode
 
 
 class AlgorithmException(Exception):
@@ -12,7 +13,11 @@ class AlgorithmException(Exception):
         super(AlgorithmException, self).__init__(data)
 
         self.code = code
-        self.data = data or traceback.format_exception(*sys.exc_info())
+        extra = data if data is not None else ""
+        self.data = ErrorCode.get_description(code) + extra
+        # traceback.format_exception(*sys.exc_info()))
+        if code == -1 and data is None:
+            self.data = traceback.format_exception(*sys.exc_info())
 
 
 class ConfigException(AlgorithmException):

@@ -75,7 +75,7 @@ def open_text(infile, encode="utf-8"):
             byte_io.close()
             string_io.close()
         else:
-            raise AlgorithmException(data="file doesn't exist {}".format(sec_file_path))
+            raise AlgorithmException(5002,sec_file_path)
 
 
 @contextlib.contextmanager
@@ -93,7 +93,7 @@ def open_binary(infile, force=False):
         bytes_in = bytearray(0)
         input_size = os.path.getsize(infile)
         if input_size > max_bytes:
-            raise AlgorithmException(data="the file is too large! {}".format(infile))
+            raise AlgorithmException(5003,infile)
         with open(infile, 'rb') as f_in:
             for _ in range(0, input_size, max_bytes):
                 bytes_in += f_in.read(max_bytes)
@@ -110,7 +110,7 @@ def open_binary(infile, force=False):
                 bytes_in = bytearray(0)
                 input_size = os.path.getsize(outputfile)
                 if input_size > max_bytes:
-                    raise AlgorithmException(data="the file is too large! {}".format(outputfile))
+                    raise AlgorithmException(5003,outputfile)
                 with open(outputfile, 'rb') as f_in:
                     for _ in range(0, input_size, max_bytes):
                         bytes_in += f_in.read(max_bytes)
@@ -121,7 +121,7 @@ def open_binary(infile, force=False):
                 yield byte_io.getvalue()
                 byte_io.close()
         else:
-            raise AlgorithmException(data="file doesn't exist {}".format(sec_file_path))
+            raise AlgorithmException(5002,sec_file_path)
 
 
 # fixme: it's not safe.

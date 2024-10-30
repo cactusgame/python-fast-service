@@ -30,7 +30,7 @@ def rate_limit(max_requests_per_day):
 
                 if count >= max_requests_per_day:
                     raise AlgorithmException(code=429,
-                                             data=f"today's request count has exceeded the request limit ({max_requests_per_day} per day).")
+                                             data=f"({max_requests_per_day} per day).")
 
                 ip_data[endpoint] = count + 1
                 rate_limit_data[today][client_ip] = ip_data
