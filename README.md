@@ -1,4 +1,4 @@
-[Chinese](README_zh)   [[English]](README)
+[中文](README_zh)   [[English]](README)
 
 # Introduction
 
