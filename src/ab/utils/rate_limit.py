@@ -5,7 +5,6 @@ from ab.utils.exceptions import AlgorithmException
 
 import threading
 
-app = Flask(__name__)
 
 # format: { 'YYYY-MM-DD': { 'ip_address': { 'endpoint': count } } }
 rate_limit_data = {}
@@ -29,7 +28,7 @@ def rate_limit(max_requests_per_day):
                 count = ip_data.get(endpoint, 0)
 
                 if count >= max_requests_per_day:
-                    raise AlgorithmException(code=429,
+                    raise AlgorithmException(code=5004,
                                              data=f"({max_requests_per_day} per day).")
 
                 ip_data[endpoint] = count + 1

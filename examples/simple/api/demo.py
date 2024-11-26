@@ -2,12 +2,14 @@ from ab.utils import logger
 from ab.core import api
 from ab import app
 from ab.utils.rate_limit import rate_limit
+from ab.utils.rate_limit_by_second import rate_limit_by_second
 
 
 # will expose an API as: /api/algorithm/add
 @api()
 # only can be called 5 times per day
-@rate_limit(5)
+# @rate_limit(5)
+@rate_limit_by_second(15)
 def add(a: int, b: int) -> int:
     logger.info("enter algorithm {}, {} ".format(a, b))
     return a + b

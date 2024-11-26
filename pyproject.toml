@@ -4,9 +4,9 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "python-fast-service"
-version = "0.1.1"
+version = "0.1.3"
 description = "This project can quickly package your Python code into a service that is ready for production environments."
-readme = "README_en.md"
+readme = "README.md"
 authors = [{ name = "cactusgame", email = "704300624@qq.com" }]
 license = { file = "LICENSE" }
 classifiers = [
