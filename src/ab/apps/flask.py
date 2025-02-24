@@ -9,6 +9,7 @@ from ab.core import register_all_apis
 from ab.utils.mixes import run_once
 from ab.utils.exceptions import ConfigException
 from ab.config import Config, default_config
+from ab.plugins.db import db_conn_pool
 
 
 def jsonify(*args, **kwargs):
@@ -123,6 +124,7 @@ class FlaskApp(Flask):
         register_all_apis(self.config)
 
         fixture.register_all_fixtures(self.config)
+        db_conn_pool.init_db(self.config)
         self.add_ab_static_url(self.config)
 
         from ab.plugins.platform import Platform

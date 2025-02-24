@@ -45,7 +45,7 @@ STATIC_FOLDER = 'static'
 STATIC_URL_PATH = '/static'
 
 # local db file for sqlite, all projects can share the same file
-DB = 'sqlite:////tmp/ab.db'
+DB = 'sqlite:///./ab.db'
 
 # eureka default register info
 INSTANCE_HOST = ""

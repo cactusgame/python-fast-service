@@ -22,12 +22,37 @@ A demo and template for new project
 - `setup`: 
 
 # Calling
+- sync api
 ```
 curl --location --request POST 'localhost:8000/api/add' \
 --header 'Content-Type: application/json' \
 --data-raw '{
 	"args": {"a": 1, "b": 2}
 }'
+```
+
+- async api
+  - step1: commit your async task, return the task id.
+```
+curl --location --request POST 'http://127.0.0.1:8000/api/async_add' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+        "mode": "async",
+        "args": {
+            "a": 3,
+            "b": 6,
+            "run_seconds": 20
+        }
+}'
+```
+  - step2: check the status and result of your task.
+
+```
+
+GET http://127.0.0.1:8000/api/task/{task_id}/
+
+
+curl --location --request GET 'http://127.0.0.1:8000/api/task/d83621aa9fdb4988a246ad4404305223'
 ```
 
 # Build docker image

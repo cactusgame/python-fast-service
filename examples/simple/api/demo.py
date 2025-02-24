@@ -26,3 +26,15 @@ def custom_response(a: int, b: int) -> int:
 @api()
 def compress() -> int:
     return "this is a hello world text file, glad to meet you, bye ~this is a hello world text file, glad to meet you, bye this is a hello world text file, glad to meet you, bye this is a hello world text file, glad to meet you, bye this is a hello world text file, glad to meet you, bye this is a hello world text file, glad to meet you, bye this is a hello world text file, glad to meet you, bye this is a hello world text file, glad to meet you, bye this is a hello world text file, glad to meet you, bye this is a hello world text file, glad to meet you, bye this is a hello world text file, glad to meet you, bye this is a hello world text file, glad to meet you, bye this is a hello world text file, glad to meet you, bye this is a hello world text file, glad to meet you, bye "
+
+
+@api()
+def async_add(a: int, b: int, run_seconds: int = 3) -> int:
+    """
+    mock time-cost task
+    :param run_seconds:
+    :return:
+    """
+    import time
+    time.sleep(run_seconds)
+    return a + b

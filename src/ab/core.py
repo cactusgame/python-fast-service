@@ -16,6 +16,8 @@ class ApiClass:
 
     @classmethod
     def get_instance(cls, name: str, engine: str = 'python'):
+        import os
+        print(f"***** get {os.getpid()}")
         try:
             return api_hub[(name, engine)]
         except KeyError as e:
@@ -82,10 +84,15 @@ def register_api(name: str, engine: str, func, **kwargs):
     # wrap algorithm entry
     func = (func_metrics('algorithm_' + name))(func)
     # TODO check duplication
+    global api_hub
     api_hub[(name, engine)] = ApiClass(name, engine, func, **kwargs)
+
+    import os
+    print(f"***** register {os.getpid()}")
 
 
 def retrieve_api_params(name, engine="python"):
+    global api_hub
     if (name, engine) in api_hub:
         algo_object = api_hub.get((name, engine))
 
@@ -104,4 +111,5 @@ def register_all_apis(config):
     # fixme:
     # __import__("ab.utils.inner_algorithm")
     from ab.utils import logger
+    global api_hub
     logger.debug('algorithms:', api_hub)

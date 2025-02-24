@@ -28,6 +28,7 @@ dependencies = [
     "click==7.1.2",
     "Cython>=0.29.21",
     "pytest==5.4.3",
+    "SQLAlchemy==2.0.38",
     "pyyaml",
     "pyAesCrypt"
 ]

@@ -1,13 +1,21 @@
 import uuid
+import os
+from multiprocessing.pool import Pool
+import time
 
 from flask import Response
+from prometheus_client import Gauge
 
-from ab.utils import fixture
+from ab import app
+from ab.utils import fixture, logger
 from ab.core import ApiClass
 from ab.utils.exceptions import AlgorithmException
 from ab.plugins.data.engine import Engine
 from ab.task.recorder import TaskRecorder
 
+
+g_inprogress_async_tasks = Gauge("inprogress_async_tasks", "async task", labelnames=['mode'],
+                                 multiprocess_mode='livesum')
 
 class Task:
     """
@@ -28,6 +36,8 @@ class Task:
         # run in sync mode as default
         if request.get('mode', 'sync') == 'sync':
             return SyncTask(request)
+        elif request['mode'] in ('async'):
+            return PoolAsyncTask(request)
         else:
             raise AlgorithmException('unknown mode:', request['mode'])
 
@@ -44,8 +54,6 @@ class Task:
             self.kwargs = self.request['args'].copy()
         else:
             self.kwargs = {}
-        self.recorder = TaskRecorder.get_instance(task=self)
-        self.recorder.init(self.kwargs)
 
     def lazy_init(self):
         """
@@ -56,9 +64,6 @@ class Task:
 
         if 'task_id' in self.api.params:
             self.kwargs['task_id'] = self.id
-
-        if 'recorder' in self.api.params:
-            self.kwargs['recorder'] = self.recorder
 
         used_fixtures = set(self.api.params) & fixture.fixtures.keys()
         for f in used_fixtures:
@@ -98,3 +103,69 @@ class SyncTask(Task):
         finally:
             '''3. gc'''
             self.after_run()
+
+
+class AsyncTask(Task):
+
+    def __init__(self, request: dict):
+        super().__init__(request)
+
+        self.recorder = TaskRecorder.get_instance(task=self)
+        self.recorder.init(self.kwargs)
+
+    def inner_run(self):
+        """
+        lazy init, then run algorithm in another process
+        """
+        with g_inprogress_async_tasks.labels(mode=self.mode).track_inprogress():
+            try:
+                '''1. init'''
+                logger.debug('async worker pid:', os.getpid())
+                tic = time.time()
+                self.lazy_init()
+                toc = time.time()
+                logger.debug('async lazy init time:', toc - tic)
+
+                '''2. run'''
+                result = self.run_algorithm()
+                self.recorder.done(result)
+            except Exception as e:
+                self.recorder.error(e)
+            finally:
+                '''3. gc'''
+                self.after_run()
+
+
+class PoolAsyncTask(AsyncTask):
+    """ process pool """
+    pool = None
+    mode = 'async_pool'
+
+    @staticmethod
+    def get_pool():
+        """lazy init pool to avoid fork"""
+        if PoolAsyncTask.pool:
+            return PoolAsyncTask.pool
+
+        pool_size = app.config.get('ASYNC_POOL_SIZE', 1)
+        # two processes for each worker
+        try:
+            # setproctitle requires gcc, best effort
+            # fixme: Mac OS after 10.2, can't fork process
+            from setproctitle import setproctitle
+
+            PoolAsyncTask.pool = Pool(processes=pool_size, initializer=lambda: setproctitle(
+                'async pool for {ppid} [{app.config.APP_NAME}]'.format(ppid=os.getppid(), app=app)))
+        except ImportError as e:
+            PoolAsyncTask.pool = Pool(processes=pool_size)
+        logger.debug('init async task pool:', PoolAsyncTask.pool, '\n')
+        return PoolAsyncTask.pool
+
+    def run(self):
+        # When an object is put on a queue, the object is pickled (by pickle.dumps) and
+        # a background thread later flushes the pickled data to an underlying pipe.
+        # This has some consequences which are a little surprising, but should not cause any practical difficulties
+        pool = self.get_pool()
+        pool.apply_async(self.inner_run)
+
+        return self.id

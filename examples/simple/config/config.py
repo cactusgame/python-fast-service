@@ -13,3 +13,5 @@ LOG_LEVEL = 'DEBUG'
 preload_app = False
 
 ENABLE_LIVENESS_PROB = False
+
+workers = 2
