@@ -22,8 +22,8 @@ def global_exception_handler(error):
         # raise for pytest
         raise
     logger.exception()
+    response = jsonify({'code': -1, 'data': "server error"})
     st = traceback.format_exception(*sys.exc_info())
-    response = jsonify({'code': -1, 'data': st})
     logger.error(st)
     try:
         response.status_code = error.code

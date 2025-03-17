@@ -14,6 +14,10 @@ def add(a: int, b: int) -> int:
     logger.info("enter algorithm {}, {} ".format(a, b))
     return a + b
 
+@api()
+def error(a: int, b: int) -> int:
+    print(1/0)
+    return 2
 
 @api()
 def custom_response(a: int, b: int) -> int:
