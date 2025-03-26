@@ -20,8 +20,13 @@ conda create -n pfs python=3.8
 source activate pfs
 ```
 
+## 使用pip安装(推荐)
 
-## 使用源代码安装(推荐)
+```commandline
+pip install python-fast-service
+```
+
+## 使用源代码安装
 - 先clone源代码
 ```
 git clone hhttps://github.com/cactusgame/python-fast-service.git

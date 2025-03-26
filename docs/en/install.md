@@ -19,7 +19,14 @@ conda create -n pfs python=3.8
 source activate pfs
 ```
 
-## Installing from Source (Recommended)
+
+## Installing via Pip (Recommended)
+
+```commandline
+pip install python-fast-service
+```
+
+## Installing from Source 
 
 - First, clone the source code:
 
