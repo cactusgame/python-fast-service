@@ -17,3 +17,4 @@ examples/simple/resource
 /python_fast_service.egg-info/
 *.egg-info
 bak
+/examples/simple/ab.db
