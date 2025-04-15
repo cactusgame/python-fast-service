@@ -31,19 +31,21 @@ curl --location --request POST 'localhost:8000/api/add' \
 }'
 ```
 
-- async api
+- thread async api
   - step1: commit your async task, return the task id.
 ```
-curl --location --request POST 'http://127.0.0.1:8000/api/async_add' \
---header 'Content-Type: application/json' \
---data-raw '{
-        "mode": "async",
+curl --location --request POST 'http://127.0.0.1:8000/api/async_add' --header 'Content-Type: application/json' --data-raw '{
+        "mode": "thread",
         "args": {
             "a": 3,
             "b": 6,
-            "run_seconds": 20
+            "run_seconds": 2
         }
 }'
+
+response: 
+{"code":0,"data":"099eee0a6c42499781b726cf11f5c548"}
+
 ```
   - step2: check the status and result of your task.
 
@@ -52,7 +54,11 @@ curl --location --request POST 'http://127.0.0.1:8000/api/async_add' \
 GET http://127.0.0.1:8000/api/task/{task_id}/
 
 
-curl --location --request GET 'http://127.0.0.1:8000/api/task/d83621aa9fdb4988a246ad4404305223'
+for example: 
+curl --location --request GET 'http://127.0.0.1:8000/api/task/f93246f830eb4eb9ae7e842092c8a504'
+
+response:
+{"id":28,"task_id":"f93246f830eb4eb9ae7e842092c8a504","code":2,"feature":9,"gmt_create":"2025-04-15 17:03:47.000","gmt_modified":null}
 ```
 
 # Build docker image

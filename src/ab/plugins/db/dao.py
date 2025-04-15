@@ -72,7 +72,10 @@ class Mapper:
                 raise DuplicatedKeyException() from e
             else:
                 if isinstance(query, Select):
-                    return [dict(r) for r in list(result)]
+                    return [row._asdict() for row in result]
+
+                    # return [dict(r) for r in list(result)]
+                    # return [r for r in list(result)]
                 else:
                     return result
 
@@ -239,6 +242,9 @@ class Mapper:
 
     def update(self, row, conditions):
         query = self.table.update().values(**self.dumps(row)).where(self.gen_where(conditions))
+
+        # print("DEBUG SQL:", str(query.compile(compile_kwargs={"literal_binds": True})))
+
         result = self.execute(query)
         # result.close()
         return result.rowcount

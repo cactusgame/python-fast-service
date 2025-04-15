@@ -48,6 +48,9 @@ class TaskRecorder:
         if app.config.get('TESTING'):
             raise
 
+    def update(self, mapping: dict):
+        raise NotImplementedError()
+
     def done(self, result):
         '''2: DONE'''
         self.log('done')
@@ -90,4 +93,4 @@ class DbTaskRecorder(TaskRecorder):
         self.mapper.insert(kwargs)
 
     def update(self, mapping: dict):
-        self.mapper.update(mapping, conditions={'task_id': self.task.id, 'gmt_modified': datetime.datetime.now()})
+        self.mapper.update(mapping, conditions={'task_id': self.task.id})

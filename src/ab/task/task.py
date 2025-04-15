@@ -2,6 +2,7 @@ import uuid
 import os
 from multiprocessing.pool import Pool
 import time
+from concurrent.futures import ThreadPoolExecutor
 
 from flask import Response
 from prometheus_client import Gauge
@@ -13,9 +14,9 @@ from ab.utils.exceptions import AlgorithmException
 from ab.plugins.data.engine import Engine
 from ab.task.recorder import TaskRecorder
 
-
 g_inprogress_async_tasks = Gauge("inprogress_async_tasks", "async task", labelnames=['mode'],
                                  multiprocess_mode='livesum')
+
 
 class Task:
     """
@@ -36,8 +37,8 @@ class Task:
         # run in sync mode as default
         if request.get('mode', 'sync') == 'sync':
             return SyncTask(request)
-        elif request['mode'] in ('async'):
-            return PoolAsyncTask(request)
+        elif request['mode'] in ('thread'):
+            return ThreadAsyncTask(request)
         else:
             raise AlgorithmException('unknown mode:', request['mode'])
 
@@ -104,6 +105,15 @@ class SyncTask(Task):
             '''3. gc'''
             self.after_run()
 
+# 存储任务结果：None 表示未完成，其他为结果
+_task_results = {}
+
+def some_function(x: int, y: int) -> int:
+    # 模拟一个同步耗时操作
+    import time
+    time.sleep(3)
+    return x + y
+
 
 class AsyncTask(Task):
 
@@ -127,7 +137,8 @@ class AsyncTask(Task):
                 logger.debug('async lazy init time:', toc - tic)
 
                 '''2. run'''
-                result = self.run_algorithm()
+                result = self.run_api()
+                # print(f"async result is {result}")
                 self.recorder.done(result)
             except Exception as e:
                 self.recorder.error(e)
@@ -136,36 +147,19 @@ class AsyncTask(Task):
                 self.after_run()
 
 
-class PoolAsyncTask(AsyncTask):
+# global init
+pool = ThreadPoolExecutor(max_workers=2)
+
+
+class ThreadAsyncTask(AsyncTask):
     """ process pool """
-    pool = None
-    mode = 'async_pool'
+    mode = 'thread'
 
     @staticmethod
     def get_pool():
-        """lazy init pool to avoid fork"""
-        if PoolAsyncTask.pool:
-            return PoolAsyncTask.pool
-
-        pool_size = app.config.get('ASYNC_POOL_SIZE', 1)
-        # two processes for each worker
-        try:
-            # setproctitle requires gcc, best effort
-            # fixme: Mac OS after 10.2, can't fork process
-            from setproctitle import setproctitle
-
-            PoolAsyncTask.pool = Pool(processes=pool_size, initializer=lambda: setproctitle(
-                'async pool for {ppid} [{app.config.APP_NAME}]'.format(ppid=os.getppid(), app=app)))
-        except ImportError as e:
-            PoolAsyncTask.pool = Pool(processes=pool_size)
-        logger.debug('init async task pool:', PoolAsyncTask.pool, '\n')
-        return PoolAsyncTask.pool
+        return pool
 
     def run(self):
-        # When an object is put on a queue, the object is pickled (by pickle.dumps) and
-        # a background thread later flushes the pickled data to an underlying pipe.
-        # This has some consequences which are a little surprising, but should not cause any practical difficulties
         pool = self.get_pool()
-        pool.apply_async(self.inner_run)
-
+        pool.submit(self.inner_run)
         return self.id
