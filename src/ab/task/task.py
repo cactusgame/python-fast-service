@@ -150,7 +150,10 @@ class UnlimitedAsyncTask(AsyncTask):
 
 
 class PoolAsyncTask(AsyncTask):
-    """ process pool """
+    """
+    process pool
+    notice: it may only work on Linux
+    """
     pool = None
 
     @staticmethod
@@ -162,20 +165,10 @@ class PoolAsyncTask(AsyncTask):
 
         pool_size = app.config.get('ASYNC_POOL_SIZE', 2)
 
-        """获取或创建进程池（单例模式）"""
         PoolAsyncTask.pool = Pool(processes=pool_size)
         return PoolAsyncTask.pool
 
     def run(self):
-        # # When an object is put on a queue, the object is pickled (by pickle.dumps) and
-        # # a background thread later flushes the pickled data to an underlying pipe.
-        # # This has some consequences which are a little surprising, but should not cause any practical difficulties
         pool = self.get_pool()
         pool.apply_async(self.inner_run)
         return self.id
-
-        # 使用进程池
-        # with Pool(processes=2) as pool:
-        #     # 将数据作为参数传递
-        #     result = pool.apply_async(self.inner_run)
-        # return self.id

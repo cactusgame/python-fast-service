@@ -19,6 +19,7 @@ def add_async(a: int, b: int, c: int) -> int:
     logger.info("enter async algorithm {}, {} ".format(a, b))
     import time
     time.sleep(10)
+    logger.info("exit async algorithm {}, {} ".format(a, b))
     return a + b + c
 
 
