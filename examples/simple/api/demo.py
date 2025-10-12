@@ -14,6 +14,7 @@ def add(a: int, b: int) -> int:
     logger.info("enter algorithm {}, {} ".format(a, b))
     return a + b
 
+
 @api()
 def add_async(a: int, b: int, c: int) -> int:
     logger.info("enter async algorithm {}, {} ".format(a, b))
@@ -24,9 +25,16 @@ def add_async(a: int, b: int, c: int) -> int:
 
 
 @api()
+def cache_test(cache_client, key, value):
+    cache_client.bset(key, value, ex=86400)
+    return key
+
+
+@api()
 def error(a: int, b: int) -> int:
-    print(1/0)
+    print(1 / 0)
     return 2
+
 
 @api()
 def custom_response(a: int, b: int) -> int:

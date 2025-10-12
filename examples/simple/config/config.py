@@ -13,3 +13,10 @@ LOG_LEVEL = 'DEBUG'
 preload_app = False
 
 ENABLE_LIVENESS_PROB = False
+
+# cache plugin
+REDIS = {
+    'host': 'xxxx',
+    'port': 6379,
+    'password': 'xxxx'
+}

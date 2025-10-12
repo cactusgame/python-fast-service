@@ -13,6 +13,7 @@ from ab.plugins.data.engine import Engine
 from ab.task.recorder import TaskRecorder
 from ab.utils import logger, fixture
 from ab import app
+from ab.plugins.cache.redis import cache_plugin
 
 class Task:
     """
@@ -63,6 +64,9 @@ class Task:
         """
         self.engine = Engine.get_instance(self.request.get('engine'))
         self.api = ApiClass.get_instance(self.request['algorithm'], self.engine._type)
+
+        if 'cache_client' in self.api.params:
+            self.kwargs['cache_client'] = cache_plugin.get_cache_client()
 
         if 'task_id' in self.api.params:
             self.kwargs['task_id'] = self.id
