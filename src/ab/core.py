@@ -104,4 +104,4 @@ def register_all_apis(config):
     # fixme:
     # __import__("ab.utils.inner_algorithm")
     from ab.utils import logger
-    logger.debug('algorithms:', api_hub)
+    logger.debug('register algorithms:', api_hub)

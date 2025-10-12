@@ -1,13 +1,18 @@
 import uuid
 
 from flask import Response
+from multiprocessing import Process
+from multiprocessing.pool import Pool
 
-from ab.utils import fixture
+import os
+import time
+
 from ab.core import ApiClass
 from ab.utils.exceptions import AlgorithmException
 from ab.plugins.data.engine import Engine
 from ab.task.recorder import TaskRecorder
-
+from ab.utils import logger, fixture
+from ab import app
 
 class Task:
     """
@@ -26,8 +31,13 @@ class Task:
     @staticmethod
     def get_instance(request):
         # run in sync mode as default
-        if request.get('mode', 'sync') == 'sync':
+        mode = request.get('mode', 'sync')
+        if mode == 'sync':
             return SyncTask(request)
+        elif mode == 'async':
+            return PoolAsyncTask(request)
+        elif mode == 'async_unlimited':
+            return UnlimitedAsyncTask(request)
         else:
             raise AlgorithmException('unknown mode:', request['mode'])
 
@@ -98,3 +108,74 @@ class SyncTask(Task):
         finally:
             '''3. gc'''
             self.after_run()
+
+
+class AsyncTask(Task):
+
+    def inner_run(self):
+        """
+        lazy init, then run algorithm in another process
+        """
+        try:
+            '''1. init'''
+            logger.debug('async worker pid:', os.getpid())
+            tic = time.time()
+            self.lazy_init()
+            toc = time.time()
+            logger.debug('async lazy init time:', toc - tic)
+
+            '''2. run'''
+            result = self.run_api()
+            self.recorder.done(result)
+        except Exception as e:
+            self.recorder.error(e)
+        finally:
+            '''3. gc'''
+            self.after_run()
+
+
+class UnlimitedAsyncTask(AsyncTask):
+    """create new process for each task"""
+    mode = 'async_unlimited'
+
+    def run(self):
+        """
+        it doesn't fork all memory on MAC
+        :return:
+        """
+        p = Process(target=self.inner_run)
+        p.start()
+
+        return self.id
+
+
+class PoolAsyncTask(AsyncTask):
+    """ process pool """
+    pool = None
+
+    @staticmethod
+    def get_pool():
+
+        """lazy init pool to avoid fork"""
+        if PoolAsyncTask.pool:
+            return PoolAsyncTask.pool
+
+        pool_size = app.config.get('ASYNC_POOL_SIZE', 2)
+
+        """获取或创建进程池（单例模式）"""
+        PoolAsyncTask.pool = Pool(processes=pool_size)
+        return PoolAsyncTask.pool
+
+    def run(self):
+        # # When an object is put on a queue, the object is pickled (by pickle.dumps) and
+        # # a background thread later flushes the pickled data to an underlying pipe.
+        # # This has some consequences which are a little surprising, but should not cause any practical difficulties
+        pool = self.get_pool()
+        pool.apply_async(self.inner_run)
+        return self.id
+
+        # 使用进程池
+        # with Pool(processes=2) as pool:
+        #     # 将数据作为参数传递
+        #     result = pool.apply_async(self.inner_run)
+        # return self.id

@@ -30,6 +30,16 @@ curl --location --request POST 'localhost:8000/api/add' \
 }'
 ```
 
+## async case
+```
+curl --location --request POST 'localhost:8000/api/add_async' \
+--header 'Content-Type: application/json' \
+--data-raw '{
+"mode": "async_unlimited",
+	"args": {"a": 1, "b": 2, "c": 3}
+}'
+```
+
 # Build docker image
 ```
 sh build.sh

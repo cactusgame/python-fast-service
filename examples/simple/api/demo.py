@@ -15,6 +15,14 @@ def add(a: int, b: int) -> int:
     return a + b
 
 @api()
+def add_async(a: int, b: int, c: int) -> int:
+    logger.info("enter async algorithm {}, {} ".format(a, b))
+    import time
+    time.sleep(10)
+    return a + b + c
+
+
+@api()
 def error(a: int, b: int) -> int:
     print(1/0)
     return 2
