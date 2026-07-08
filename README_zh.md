@@ -1,5 +1,9 @@
 [中文](README_zh)   [[English]](README)
 
+# 案例
+本项目是[扫描仙人](https://www.secure-scanner.net/en)和其私有化输出的基础框架之一。
+
+
 # 简介
 
 这个项目可以快速将你的python代码，包装成生产环境可用的服务，主要包含以下功能
