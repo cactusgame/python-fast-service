@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "python-fast-service"
-version = "0.1.4"
+version = "0.2.0"
 description = "This project can quickly package your Python code into a service that is ready for production environments."
 readme = "README.md"
 authors = [{ name = "cactusgame", email = "704300624@qq.com" }]
@@ -28,6 +28,7 @@ dependencies = [
     "click==7.1.2",
     "Cython>=0.29.21",
     "pytest==5.4.3",
+    "redis==6.1.1",
     "pyyaml",
     "pyAesCrypt"
 ]

@@ -142,5 +142,9 @@ sh build.sh
     - [配置gunicorn的常见问题](https://zhuanlan.zhihu.com/p/371115835)
 
 
+# CHANGELOG
+- 0.2.0
+  - feature: `redis` support
+  - feature: async request support
 
 
